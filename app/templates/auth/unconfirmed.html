@@ -1,0 +1,11 @@
+{% extends "extends/base_page.html" %}
+{% block page_content %}
+    <h4>您还没有确认您的账号。</h4>
+    <p class="">
+        在您访问这个网站之前,您需要确认您的账号。请检查您的收件箱{{ current_user.email }},您应该收到了一封带确认链接的邮件, 请您确认后再次登录网站,谢谢!
+    </p>
+    <p>
+        您没有收到邮件,想重新获取一封确认邮件?
+        <a href="{{ url_for('auth.resend_confirmation') }}">点击这里</a>
+    </p>
+{% endblock %}
