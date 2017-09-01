@@ -35,4 +35,7 @@ def create_app(config_name):
     from .backend.user import user as user_blueprint
     app.register_blueprint(user_blueprint, url_prefix='/backend/user')
 
+    from .backend.home import home as home_blueprint
+    app.register_blueprint(home_blueprint, url_prefix='/home')
+
     return app
