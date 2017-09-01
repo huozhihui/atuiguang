@@ -1,0 +1,78 @@
+<!-- 普通文本框 -->
+{% macro input_field(field) %}
+    {% if field.flags.required %}
+        {{ field(class="form-control", required="") }}
+    {% else %}
+        {{ field(class="form-control") }}
+    {% endif %}
+{% endmacro %}
+
+<!-- 单选框 -->
+{% macro radio_field(field) %}
+    {% for item in field %}
+        <label class="radio-inline">{{ item }}{{ item.label }}</label>
+    {% endfor %}
+{% endmacro %}
+
+<!-- 下拉框 -->
+{% macro select_field(label_name, select_name, objects, option) %}
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="type">{{ label_name }}</label>
+        <div class="col-sm-6">
+            <select class="form-control" id="{{ select_name }}_id" name="{{ select_name }}">
+                {% for obj in objects %}
+                    <option value="{{ obj[option[0]] }}">{{ obj[option[1]] }}</option>
+                {% endfor %}
+            </select>
+            <label id="{{ select_name }}_error" class="error" for="type" style="display:none"> </label>
+        </div>
+    </div>
+{% endmacro %}
+
+
+<!-- 表单按钮 -->
+{% macro render_button(buttons) %}
+    <div class="form-group">
+        <label class="control-label col-sm-2" for=""></label>
+        <div class=" col-sm-6">
+            {% for button in buttons %}
+                {{ button(class="btn btn-default mr10") }}
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}
+
+<!-- 表单调用接口 -->
+{% macro render_field(field) %}
+    <div class="form-group">
+        {{ field.label(class="control-label col-sm-2") }}
+        {% if field.flags.required %}
+            <span class="red fl">*</span>
+        {% endif %}
+
+        <div class="col-sm-6">
+            {% if field.type == "RadioField" %}
+                {{ radio_field(field) }}
+            {% else %}
+                {{ input_field(field) }}
+            {% endif %}
+            {{ field.label(class="error", text=" ", style="display:none") }}
+        </div>
+    </div>
+{% endmacro %}
+
+
+
+{% macro show_field(field) %}
+    <div class="form-group">
+        {{ field.label(class="control-label col-sm-2") }}
+        <div class="col-sm-6">
+            {{ field }}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro hidden_field(field) %}
+    {{ field }}
+{% endmacro %}
+
