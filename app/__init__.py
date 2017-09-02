@@ -36,6 +36,16 @@ def create_app(config_name):
     app.register_blueprint(user_blueprint, url_prefix='/backend/user')
 
     from .backend.home import home as home_blueprint
-    app.register_blueprint(home_blueprint, url_prefix='/home')
+    app.register_blueprint(home_blueprint)
+
+    from .backend.info_type import info_type as info_type_blueprint
+    app.register_blueprint(info_type_blueprint, url_prefix='/backend/info_type')
+
+    # from .backend.info import info as info_blueprint
+    # app.register_blueprint(info_blueprint, url_prefix='/backend/info')
+
+    # from .frontend.main import main as main_blueprint
+    # app.register_blueprint(main_blueprint, url_prefix='/frontend/main')
+
 
     return app

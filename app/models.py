@@ -19,11 +19,6 @@ class Base(db.Model):
         return self.__dict__[item]
 
 
-class CommonUserId(db.Model):
-    __abstract__ = True
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-
 # 定义数据库模型
 class Role(Base):
     __tablename__ = 'roles'
@@ -88,27 +83,31 @@ class User(UserMixin, Base):
         return True if self.role_id == 1 else False
 
 
-# class InfoType(CommonUserId, Base):
-#     __tablename__ = 'info_types'
-#     name = db.Column(db.String(30), unique=True, nullable=False)
-#     infos = db.relationship('Info', backref='info_type', lazy='dynamic')
-#
-#     def __repr__(self):
-#         return '<InfoType %r>' % self.name
+class InfoType(Base):
+    __tablename__ = 'info_types'
+    name = db.Column(db.String(30), unique=True, nullable=False)
+    infos = db.relationship('Info', backref='info_type', lazy='dynamic')
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __repr__(self):
+        return '<InfoType %r>' % self.name
 
 
 # 信息表
-# class Info(CommonUserId, Base):
-#     __tablename__ = 'infos'
-#     type = db.Column(db.String(30), nullable=False)
-#     content = db.Column(db.TEXT())
-#     contact_name = db.Column(db.String(30))
-#     telphone = db.Column(db.String(11), nullable=False, index=True)
-#     wx = db.Column(db.String(50))
-#     confirm_user = db.Column(db.Integer, db.ForeignKey('users.id'))
-#     confirmed = db.Column(db.Boolean, default=False)
-#     show = db.Column(db.Boolean, default=True)
-#     info_type_id = db.Column(db.Integer, db.ForeignKey('info_types.id'))
-#
-#     def __repr__(self):
-#         return '<Info %r: %r>' % (self.type, self.content)
+class Info(Base):
+    __tablename__ = 'infos'
+    type = db.Column(db.String(30), nullable=False)
+    content = db.Column(db.TEXT())
+    contact_name = db.Column(db.String(30))
+    telphone = db.Column(db.String(11), nullable=False, index=True)
+    wx = db.Column(db.String(50))
+    audit_user = db.Column(db.Integer, db.ForeignKey('users.id'))
+    # 是否审核
+    audited = db.Column(db.Boolean, default=False)
+    # 是否发布
+    show = db.Column(db.Boolean, default=True)
+    info_type_id = db.Column(db.Integer, db.ForeignKey('info_types.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __repr__(self):
+        return '<Info %r: %r>' % (self.type, self.content)

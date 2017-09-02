@@ -22,10 +22,19 @@ jQuery.extend(jQuery.validator.messages, {
 });
 
 /**
+ * 只能包含汉子
+ */
+jQuery.validator.addMethod("chinese_character", function (value, element) {
+    var reg = /^[\u4e00-\u9fa5]*$/;
+    return this.optional(element) || reg.test(value);
+}, "只能填写汉字");
+
+
+/**
  * 只能包含英文字母、数字、_和-
  */
-jQuery.validator.addMethod("valid_letter_num", function (value, element) {
-    var reg = /^[\d\a-zA-Z\_\-]*$/;
+jQuery.validator.addMethod("letter_num_underline", function (value, element) {
+    var reg = /^[\a-zA-Z\_]+[\d\a-zA-Z\_\-]*$/;
     return this.optional(element) || reg.test(value);
 }, "只能包含英文字母、数字、_和-");
 
@@ -58,42 +67,6 @@ jQuery.validator.addMethod("CommonNameCN", function (value, element) {
 
 
 /**
- * 地域名称验证规则
- * 只能包含英文字母、数字、_和-,且只能以字母或_开头
- */
-jQuery.validator.addMethod("uecCommonName", function (value, element) {
-    var reg = /^[\a-zA-Z\_]+[\d\a-zA-Z\_\-]*$/;
-    return this.optional(element) || reg.test(value);
-}, "只能包含英文字母、数字、_和-,且只能以字母或_开头");
-
-/**
- * 云平台字符串基本验证规则
- * 只能包含英文字母、数字、_和-
- */
-jQuery.validator.addMethod("uecCommonString", function (value, element) {
-    var reg = /^[\d\a-zA-Z\_\-]*$/;
-    return this.optional(element) || reg.test(value);
-}, "只能包含英文字母、数字、_和-");
-
-/**
- * 正整数
- */
-jQuery.validator.addMethod("uecPositiveInteger", function (value, element) {
-    var reg = /^[1-9]+[0-9]*$/;  //正整数
-    return this.optional(element) || reg.test(value);
-}, "只能是正整数");
-
-
-//jQuery.validator.addMethod("uecName", function(value, element, params) { 
-//	var length = value.length;
-//	if(length < params[0] || length > params[1]){
-//		return false;
-//	}
-//	var reg = /^[\d\a-zA-Z\u4e00-\u9fa5\_\-]*$/;    
-//	return this.optional(element) || reg.test(value);
-//}, jQuery.validator.format("名称只能为{0}到{1}长度的字符，并且只能为中文字符、数字、字母_和-"));  
-
-/**
  * 邮政编码规则
  */
 jQuery.validator.addMethod("uecZipCode", function (value, element) {
@@ -101,13 +74,14 @@ jQuery.validator.addMethod("uecZipCode", function (value, element) {
     return this.optional(element) || (tel.test(value));
 }, "请正确填写您的邮政编码");
 
+
 /**
  * 手机号码验证
  */
 jQuery.validator.addMethod("phone", function (value, element) {
     var reg = /^1[3|4|5|8]\d{9}$/;
     return this.optional(element) || (reg.test(value));
-}, "请输入11位手机号码");
+}, "请输入正确的11位手机号码");
 
 /**
  * 手机号码或邮箱验证
@@ -116,7 +90,7 @@ jQuery.validator.addMethod("phone_email", function (value, element) {
     var reg = /^1[3|4|5|8]\d{9}$/;
     var reg1 = /[a-zA-Z0-9]{1,10}@[a-zA-Z0-9]{1,5}\.[a-zA-Z0-9]{1,5}/;
     return this.optional(element) || (reg.test(value)) || (reg1.test(value));
-}, "请输入正确的邮箱或手机号!");
+}, "请输入正确的邮箱或手机号");
 
 //this one requires the text "buga", we define a default message, too
 $.validator.addMethod("buga", function (value) {
@@ -132,15 +106,6 @@ $.validator.methods.equal = function (value, element, param) {
 //$.validator.addMethod("math", function(value, element, params) {
 //  return this.optional(element) || value == params[0] + params[1];
 //}, $.validator.format("Please enter the correct value for {0} + {1}"));
-
-/*$(function(){
- $('.submit').click(function(){
- alert(123);
- $('label.error').append('<i class="fa fa-fw fa-exclamation-circle"></i>').css({
- 'border':'1px solid #f00',
- });
- });
- });*/
 
 
 //IP地址验证   

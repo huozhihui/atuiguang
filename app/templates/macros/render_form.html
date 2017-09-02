@@ -56,7 +56,11 @@
             {% else %}
                 {{ input_field(field) }}
             {% endif %}
-            {{ field.label(class="error", text=" ", style="display:none") }}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    {{ field.label(class="error", text=error) }}
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 {% endmacro %}
