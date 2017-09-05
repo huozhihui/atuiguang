@@ -61,7 +61,7 @@ def edit(id):
         if form.validate_on_submit():
             exist_info = Info.query.filter_by(content=form.content.data, user_id=current_user.id).first()
             if exist_info and info.id != exist_info.id:
-                flash(u'信息{}已存在!', 'danger')
+                flash(u'信息已存在!', 'danger')
                 return _render('form', locals())
             else:
                 form.populate_obj(info)
