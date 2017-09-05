@@ -3,7 +3,7 @@
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from . import auth
-from ..models import User
+from ..models import User, Role
 from .. import db
 from .forms import LoginForm, RegistrationForm
 from ..email import send_email
@@ -50,7 +50,7 @@ def register():
                 email=form.email.data,
                 password=form.password.data,
                 identity=form.identity.data,
-                role_id=2
+                role_id=Role.USER
             )
             user = User(**form_data)
             db.session.add(user)

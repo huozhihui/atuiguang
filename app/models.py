@@ -25,6 +25,10 @@ class Role(Base):
     name = db.Column(db.String(30), unique=True, nullable=False)
     users = db.relationship('User', backref='role', lazy='dynamic')
 
+    SUPER_ADMIN = 1
+    ADMIN = 2
+    USER = 3
+
     def __repr__(self):
         return '<Role %r>' % self.name
 

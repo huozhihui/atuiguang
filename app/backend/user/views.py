@@ -21,7 +21,7 @@ def index():
 def new():
     header = u'用户添加'
     form = UserForm()
-    form.role_id.choices = [(role.id, role.name) for role in Role.query.all()]
+    form.role_id.choices = [(role.id, role.name) for role in Role.query.filter(Role.id > 1).all()]
     if request.method == "POST":
         if form.validate_on_submit():
             form_data = dict(identity=form.identity.data,
