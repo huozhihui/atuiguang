@@ -18,6 +18,8 @@ def login():
         user = User.query.filter((User.telphone == form.tel_email.data) | (User.email == form.tel_email.data)).first()
         if user is None:
             flash(u'邮箱或手机号不存在!')
+        elif user.freezed:
+            flash(u'您已被冻结,请联系管理员!')
         else:
             if user.verify_password(form.password.data):
                 login_user(user, form.remember_me.data)
@@ -47,7 +49,8 @@ def register():
                 telphone=form.telphone.data,
                 email=form.email.data,
                 password=form.password.data,
-                identity=form.identity.data
+                identity=form.identity.data,
+                role_id=2
             )
             user = User(**form_data)
             db.session.add(user)
