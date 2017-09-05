@@ -42,6 +42,10 @@ class User(UserMixin, Base):
     # 冻结
     freezed = db.Column(db.Boolean, default=False)
 
+    info_types = db.relationship('InfoType', backref='info_type', lazy='dynamic',
+                                 primaryjoin="User.id == InfoType.user_id")
+    infos = db.relationship('Info', backref='user', lazy='dynamic', primaryjoin="User.id == Info.user_id")
+
     def __repr__(self):
         return '<User %r>' % self.username
 
@@ -96,11 +100,11 @@ class InfoType(Base):
 # 信息表
 class Info(Base):
     __tablename__ = 'infos'
-    type = db.Column(db.String(30), nullable=False)
     content = db.Column(db.TEXT())
     contact_name = db.Column(db.String(30))
     telphone = db.Column(db.String(11), nullable=False, index=True)
-    wx = db.Column(db.String(50))
+    wx = db.Column(db.String(30))
+    # 审核人
     audit_user = db.Column(db.Integer, db.ForeignKey('users.id'))
     # 是否审核
     audited = db.Column(db.Boolean, default=False)

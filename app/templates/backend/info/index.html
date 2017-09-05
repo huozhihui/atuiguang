@@ -1,0 +1,39 @@
+{% extends "extends/base_table.html" %}
+{% block table_content %}
+    {% import 'macros/render_btn.html' as macros %}
+    <div class="dataTable_wrapper">
+        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+            <thead>
+            <tr>
+                <th width="10%">序号</th>
+                <th width="10%">类型</th>
+                <th width="15%">内容</th>
+                <th width="10%">联系人</th>
+                <th width="10%">手机号</th>
+                <th width="20%">状态</th>
+                <th width="10%">发布人</th>
+                <th width="15%">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for obj in objects %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ obj.info_type.name }}</td>
+                    <td>{{ obj.content }}</td>
+                    <td>{{ obj.contact_name }}</td>
+                    <td>{{ obj.telphone }}</td>
+                    <td>{{ obj.status }}</td>
+                    <td>{{ obj.user.username }}</td>
+                    <td>
+                        {{ macros.render_edit_btn('info.edit', obj.id) }}
+                        {{ macros.render_del_btn('info.delete', obj.id) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- /.table-responsive -->
+    {{ macros.render_add_btn('info.new') }}
+{% endblock %}

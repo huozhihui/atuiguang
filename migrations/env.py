@@ -18,9 +18,11 @@ logger = logging.getLogger('alembic.env')
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 from flask import current_app
+
 config.set_main_option('sqlalchemy.url',
                        current_app.config.get('SQLALCHEMY_DATABASE_URI'))
 target_metadata = current_app.extensions['migrate'].db.metadata
+
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -72,6 +74,7 @@ def run_migrations_online():
     connection = engine.connect()
     context.configure(connection=connection,
                       target_metadata=target_metadata,
+                      compare_type=True,
                       process_revision_directives=process_revision_directives,
                       **current_app.extensions['migrate'].configure_args)
 
@@ -80,6 +83,7 @@ def run_migrations_online():
             context.run_migrations()
     finally:
         connection.close()
+
 
 if context.is_offline_mode():
     run_migrations_offline()

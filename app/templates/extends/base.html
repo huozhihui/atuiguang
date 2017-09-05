@@ -15,8 +15,10 @@
                 });
             })
         })
-        // 给所有界面备注调整显示
-        $('#notes').attr({'rows': 5});
+        // 给所有文本框调整显示
+        $('textarea').each(function () {
+            $(this).attr({'rows': 5})
+        });
     </script>
 {% endblock %}
 

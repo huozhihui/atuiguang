@@ -1,0 +1,24 @@
+{% extends "extends/base_page.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block page_content %}
+    {% import 'macros/render_form.html' as macros %}
+    <form action="" id="myform" method="post" class="form form-horizontal" role="form" novalidate="novalidate">
+        {{ form.csrf_token }}
+        {{ macros.render_field(form.info_type_id) }}
+        {{ macros.render_field(form.content) }}
+        {{ macros.render_field(form.contact_name) }}
+        {{ macros.render_field(form.telphone) }}
+        {{ macros.render_field(form.wx) }}
+        {{ macros.render_button([(form.submit), (form.return_link)]) }}
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        $('#contact_name').attr('maxlength', 30);
+        $('#wx').attr('maxlength', 30);
+        $('#telphone').addClass('phone');
+        $("form").validate({ignore: []});
+    </script>
+{% endblock %}

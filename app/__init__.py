@@ -17,6 +17,7 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
+login_manager.login_message = u"请登录系统"
 
 
 def create_app(config_name):
@@ -41,11 +42,7 @@ def create_app(config_name):
     from .backend.info_type import info_type as info_type_blueprint
     app.register_blueprint(info_type_blueprint, url_prefix='/backend/info_type')
 
-    # from .backend.info import info as info_blueprint
-    # app.register_blueprint(info_blueprint, url_prefix='/backend/info')
-
-    # from .frontend.main import main as main_blueprint
-    # app.register_blueprint(main_blueprint, url_prefix='/frontend/main')
-
+    from .backend.info import info as info_blueprint
+    app.register_blueprint(info_blueprint, url_prefix='/backend/info')
 
     return app
