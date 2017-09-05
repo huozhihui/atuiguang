@@ -1,0 +1,19 @@
+{% extends "extends/base_page.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block page_content %}
+    {% import 'macros/render_form.html' as macros %}
+    <form action="" id="myform" method="post" class="form form-horizontal" role="form" novalidate="novalidate">
+        {{ form.csrf_token }}
+        {{ macros.render_field(form.name) }}
+        {{ macros.render_button([(form.submit), (form.return_link)]) }}
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        $('#name').attr('maxlength', 30);
+        $('#name').addClass('chinese_character')
+        $("form").validate({ignore: []});
+    </script>
+{% endblock %}

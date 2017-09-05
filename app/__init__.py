@@ -33,6 +33,9 @@ def create_app(config_name):
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
+    from .backend.role import role as role_blueprint
+    app.register_blueprint(role_blueprint, url_prefix='/backend/role')
+
     from .backend.user import user as user_blueprint
     app.register_blueprint(user_blueprint, url_prefix='/backend/user')
 
