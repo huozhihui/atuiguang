@@ -5,6 +5,7 @@ from flask import Flask, current_app, url_for
 from app import create_app, db
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
+from app.models import User, Role, Info, InfoType
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)
@@ -29,7 +30,7 @@ def dated_url_for(endpoint, **values):
 
 
 def make_shell_context():
-    return dict(app=app, db=db)
+    return dict(app=app, db=db, Role=Role, User=User, Info=Info, InfoType=InfoType)
 
 
 @manager.command
