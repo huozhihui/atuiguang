@@ -19,7 +19,7 @@ def index():
 @info_type.route('/new', methods=['GET', 'POST'])
 @login_required
 def new():
-    header = u'添加'
+    header = u'信息类添加'
     form = InfoTypeForm()
     if request.method == "POST":
         if form.validate_on_submit():
@@ -50,10 +50,9 @@ def new():
 @info_type.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit(id):
-    header = u'编辑'
+    header = u'信息类编辑'
     info_type = InfoType.query.get_or_404(id)
-    form = InfoTypeForm(request.form, obj=info_type)
-    print form.validate_on_submit()
+    form = InfoTypeForm(obj=info_type)
     if request.method == "POST":
         if form.validate_on_submit():
             exist_info_type = InfoType.query.filter_by(name=form.name.data).first()
