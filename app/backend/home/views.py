@@ -14,5 +14,5 @@ def index():
 
 
 def _render(page, kwargs={}):
-    html = "home/%s.html" % page
+    html = "backend/home/%s.html" % page
     return render_template(html, **kwargs)
