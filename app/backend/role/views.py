@@ -19,7 +19,7 @@ def index():
 @role.route('/new', methods=['GET', 'POST'])
 @login_required
 def new():
-    header = u'信息添加'
+    header = u'角色添加'
     form = RoleForm()
     if request.method == "POST":
         if form.validate_on_submit():
@@ -47,7 +47,7 @@ def new():
 @role.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit(id):
-    header = u'信息编辑'
+    header = u'角色编辑'
     role = Role.query.get_or_404(id)
     form = RoleForm(obj=role)
     if request.method == "POST":
